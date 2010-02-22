@@ -1,0 +1,23 @@
+Backer is a backup tool that uses rsync. It has support for profiles, logging,
+and email notification.
+
+You will need to install the
+[bashful library](http://github.com/jmcantrell/bashful)
+before you can use backer.
+
+To install for yourself only (~/bin will need to be in your PATH):
+
+    ./install
+
+To install for everyone:
+
+    sudo ./install /usr/bin
+
+Once installed, to get help with basic usage and available options:
+
+    backer -h
+
+To get more extensive documentation (requires
+[shdoc](http://github.com/jmcantrell/shdoc)):
+
+    shdoc backer [TOPIC]
