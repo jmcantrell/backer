@@ -149,10 +149,6 @@ while getopts ":hifvqnC:P:NLDE" option; do
     esac
 done && shift $(($OPTIND - 1))
 
-#}}}1
-
-trap cleanup INT TERM EXIT
-
 # PROFILE ACTIONS {{{1
 
 if [[ $PROFILE_ACTION ]]; then
