@@ -3,7 +3,7 @@
 # Filename:      backer.sh
 # Description:   Backup data with rsync using profiles and email notification.
 # Maintainer:    Jeremy Cantrell <jmcantrell@gmail.com>
-# Last Modified: Mon 2010-03-01 00:13:09 (-0500)
+# Last Modified: Wed 2010-04-07 16:58:04 (-0400)
 
 # There's nothing all that special going on here beyond an "rsync -azv"
 # command. It's based on profiles, so many complex rsync commands can be
@@ -95,7 +95,7 @@ backup() #{{{2
 
 SCRIPT_NAME=$(basename "$0" .sh)
 SCRIPT_USAGE="Backup data using rsync."
-SCRIPT_OPTIONS="
+SCRIPT_OPTS="
 -n              Dry run.
 
 -C DIRECTORY    Use DIRECTORY for configuration.
