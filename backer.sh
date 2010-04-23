@@ -3,7 +3,7 @@
 # Filename:      backer.sh
 # Description:   Backup data with rsync using profiles and email notification.
 # Maintainer:    Jeremy Cantrell <jmcantrell@gmail.com>
-# Last Modified: Wed 2010-04-07 16:58:04 (-0400)
+# Last Modified: Thu 2010-04-22 22:03:52 (-0400)
 
 # There's nothing all that special going on here beyond an "rsync -azv"
 # command. It's based on profiles, so many complex rsync commands can be
@@ -122,7 +122,7 @@ destination=/media/backup/home/
 # log_directory=/media/backup/log
 "
 
-profile_init || error_exit "Could not initialize profiles."
+profile_init || die "Could not initialize profiles."
 
 # COMMAND-LINE OPTIONS {{{1
 
@@ -145,8 +145,8 @@ while getopts ":hifvqnC:P:NLDE" option; do
         v) verbose 1 ;;
         q) verbose 0 ;;
 
-        h) usage_exit 0 ;;
-        *) usage_exit 1 ;;
+        h) usage 0 ;;
+        *) usage 1 ;;
     esac
 done && shift $(($OPTIND - 1))
 
@@ -154,7 +154,7 @@ done && shift $(($OPTIND - 1))
 
 if [[ $PROFILE_ACTION ]]; then
     if ! profile_$PROFILE_ACTION; then
-        error_exit "Could not $PROFILE_ACTION profile(s)."
+        die "Could not $PROFILE_ACTION profile(s)."
     fi
     exit 0
 fi
@@ -165,7 +165,7 @@ OIFS=$IFS; IFS=$'\n'
 for PROFILE in $(profile_list "$PROFILE"); do
     IFS=$OIFS
 
-    profile_load || error_exit "Could not load profile '$PROFILE'."
+    profile_load || die "Could not load profile '$PROFILE'."
 
     if ! backup; then
         error "Could not backup profile '$PROFILE'."
