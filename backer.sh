@@ -3,7 +3,7 @@
 # Filename:      backer.sh
 # Description:   Backup data with rsync using profiles and email notification.
 # Maintainer:    Jeremy Cantrell <jmcantrell@gmail.com>
-# Last Modified: Thu 2010-04-22 22:03:52 (-0400)
+# Last Modified: Fri 2010-04-23 12:47:05 (-0400)
 
 # There's nothing all that special going on here beyond an "rsync -azv"
 # command. It's based on profiles, so many complex rsync commands can be
@@ -165,10 +165,7 @@ OIFS=$IFS; IFS=$'\n'
 for PROFILE in $(profile_list "$PROFILE"); do
     IFS=$OIFS
 
-    profile_load || die "Could not load profile '$PROFILE'."
+    profile_load || die   "Could not load profile '$PROFILE'."
+    backup       || error "Could not backup profile '$PROFILE'."
 
-    if ! backup; then
-        error "Could not backup profile '$PROFILE'."
-        continue
-    fi
 done
