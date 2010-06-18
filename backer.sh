@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Filename:      backer.sh
 # Description:   Backup data with rsync using profiles and email notification.
 # Maintainer:    Jeremy Cantrell <jmcantrell@gmail.com>
-# Last Modified: Fri 2010-04-23 12:47:05 (-0400)
+# Last Modified: Thu 2010-06-17 23:18:16 (-0400)
 
 # There's nothing all that special going on here beyond an "rsync -azv"
 # command. It's based on profiles, so many complex rsync commands can be
