@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Filename:      backer.sh
-# Description:   Backup data with rsync using profiles and email notification.
+# Description:   Backup utility for Linux using profiles and email notification.
 # Maintainer:    Jeremy Cantrell <jmcantrell@gmail.com>
-# Last Modified: Sun 2010-09-19 20:36:38 (-0400)
+# Last Modified: Mon 2010-09-27 20:05:29 (-0400)
 
 # There's nothing all that special going on here beyond an "rsync -azv"
 # command. It's based on profiles, so many complex rsync commands can be
@@ -19,6 +19,50 @@ source bashful-profile
 source bashful-utils
 
 # FUNCTIONS {{{1
+
+mount_file() #{{{2
+{
+    local f=$(readlink -f "$1")
+
+    for m in $(mount | awk '{print $3}' | sort); do
+        if [[ $f == $m/* ]]; then
+            echo "$m"
+        fi
+    done | tail -n1
+}
+
+mount_path() #{{{2
+{
+    grep "^$(readlink -f "$1")[[:space:]]" /etc/fstab | awk '{print $2}'
+}
+
+mount_device() #{{{2
+{
+    grep "[[:space:]]$(readlink -f "$1")[[:space:]]" /etc/fstab | awk '{print $1}'
+}
+
+mounted_same() #{{{2
+{
+    local prev cur
+
+    for f in "$@"; do
+        cur=$(mount_file "$f")
+        [[ $prev && $cur != $prev ]] && return 1
+        prev=$cur
+    done
+
+    return 0
+}
+
+mounted_path() #{{{2
+{
+    mount | awk '{print $3}' | grep -q "^$(readlink -f "${1:-/}")$"
+}
+
+mounted_device() #{{{2
+{
+    mount | awk '{print $1}' | grep -q "^$(readlink -f "${1:-/}")$"
+}
 
 backup() #{{{2
 {
